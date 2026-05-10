@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Mother's Day</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#ffe0ea,#fff0f6,#ffe8f0);
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+}
+
+/* TITLE */
+.top-title{
+    text-align:center;
+    font-size:42px;
+    font-family:'Great Vibes',cursive;
+    color:#ff4f81;
+    margin-top:20px;
+}
+
+/* HEARTS */
+.heart{
+    position:fixed;
+    color:#ff5c8a;
+    opacity:0.5;
+    animation:float 8s linear infinite;
+    pointer-events:none;
+}
+
+@keyframes float{
+    0%{transform:translateY(100vh) scale(0.5);}
+    100%{transform:translateY(-120vh) scale(1.3);}
+}
+
+/* CENTER */
+.main{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    perspective:1200px;
+}
+
+/* ENVELOPE */
+.envelope{
+    position:relative;
+    width:420px;
+    height:280px;
+    transform-style:preserve-3d;
+    cursor:pointer;
+    transition:0.8s;
+}
+
+.envelope.open{
+    transform:translateY(-20px) rotateX(8deg);
+}
+
+/* BASE */
+.base{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#f8a8bf;
+    border-radius:12px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.25);
+    z-index:2;
+}
+
+.base::before,
+.base::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#f39ab5;
+}
+
+.base::before{
+    clip-path:polygon(0 0,50% 50%,0 100%);
+}
+
+.base::after{
+    clip-path:polygon(100% 0,50% 50%,100% 100%);
+}
+
+/* FLAP */
+.flap{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#f47fa4;
+    clip-path:polygon(0 0,100% 0,50% 60%);
+    transform-origin:top;
+    transition:1s ease-in-out;
+    z-index:5;
+}
+
+.envelope.open .flap{
+    transform:rotateX(-180deg);
+}
+
+/* SEAL */
+.seal{
+    position:absolute;
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    background:radial-gradient(circle,#ff2f6d,#c6004d);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:36px;
+    top:95px;
+    left:168px;
+    z-index:6;
+    transition:0.5s;
+}
+
+.envelope.open .seal{
+    transform:scale(0);
+    opacity:0;
+}
+
+/* LETTER */
+.letter{
+    position:absolute;
+    width:92%;
+    height:240px;
+    background:#fffdf9;
+    left:4%;
+    top:70px;
+    border-radius:10px;
+    padding:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    transform:translateZ(-40px);
+    transition:1.2s ease;
+    z-index:1;
+}
+
+.envelope.open .letter{
+    transform:translateY(-160px) translateZ(60px);
+    height:650px;
+    overflow-y:auto;
+}
+
+/* CONTENT */
+.content{
+    opacity:0;
+    transition:1s ease;
+    transition-delay:0.6s;
+}
+
+.envelope.open .content{
+    opacity:1;
+}
+
+/* TEXT */
+.letter h1{
+    text-align:center;
+    font-size:50px;
+    color:#ff4f81;
+    font-family:'Great Vibes',cursive;
+    margin-bottom:15px;
+}
+
+.letter p{
+    font-size:15px;
+    color:#444;
+    line-height:1.8;
+    margin-bottom:12px;
+}
+
+/* PHOTOS */
+.photos{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:15px 0;
+    flex-wrap:wrap;
+}
+
+.photos img{
+    width:110px;
+    height:110px;
+    object-fit:cover;
+    border-radius:12px;
+    border:3px solid #ff8bab;
+}
+
+/* SIGNATURE */
+.signature{
+    text-align:right;
+    margin-top:20px;
+    font-size:38px;
+    color:#ff4f81;
+    font-family:'Great Vibes',cursive;
+}
+
+/* MOBILE */
+@media(max-width:500px){
+    .envelope{
+        width:340px;
+        height:240px;
+    }
+
+    .photos img{
+        width:90px;
+        height:90px;
+    }
+
+    .letter h1{
+        font-size:40px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top-title">Happy Mother's Day 💖</div>
+
+<!-- HEARTS -->
+<script>
+for(let i=0;i<30;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(15+Math.random()*25)+"px";
+    h.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(h);
+}
+</script>
+
+<div class="main">
+
+<div class="envelope" id="env">
+
+    <div class="base"></div>
+    <div class="flap"></div>
+    <div class="seal">❤</div>
+
+    <div class="letter">
+
+        <div class="content">
+
+            <h1>Dear Mom ❤️</h1>
+
+            <div class="photos">
+                <img src="1.jpeg">
+                <img src="2.jpeg">
+                <img src="3.jpeg">
+            </div>
+
+            <!-- 💖 HEART-MELTING PARAGRAPHS -->
+            <p>
+                Mom, if I ever become even half the person I am meant to be, it will be because of you.
+                You didn’t just raise me—you shaped my entire world with your love.
+            </p>
+
+            <p>
+                You stayed strong even when you were tired, smiled even when you were hurting,
+                and gave me comfort even when you had none left for yourself.
+            </p>
+
+            <p>
+                I may not always say it, but I notice everything you do for me.
+                Every sacrifice, every silent prayer, every moment you chose me over yourself.
+            </p>
+
+            <p>
+                No matter how far I go in life, no success, no place, no person will ever replace you.
+                Home will always mean you.
+            </p>
+
+            <p>
+                Thank you for being my strength when I had none,
+                and my peace when the world felt too loud.
+            </p>
+
+            <div class="signature">Love You Forever ❤️</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+document.getElementById("env").addEventListener("click",()=>{
+    document.getElementById("env").classList.toggle("open");
+});
+</script>
+
+</body>
+
+</html>
