@@ -12,6 +12,7 @@
 
 <style>
 
+/* RESET */
 *{
     margin:0;
     padding:0;
@@ -34,6 +35,35 @@ body{
     margin-top:20px;
 }
 
+/* INTRO SCREEN */
+.intro{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.92);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:999;
+    cursor:pointer;
+    text-align:center;
+}
+
+.intro h2{
+    font-size:32px;
+    color:#ff4f81;
+    font-family:'Great Vibes',cursive;
+}
+
+.intro p{
+    margin-top:10px;
+    font-size:16px;
+    color:#555;
+}
+
 /* HEARTS */
 .heart{
     position:fixed;
@@ -48,7 +78,7 @@ body{
     100%{transform:translateY(-120vh) scale(1.3);}
 }
 
-/* CENTER */
+/* MAIN */
 .main{
     height:100vh;
     display:flex;
@@ -57,18 +87,19 @@ body{
     perspective:1200px;
 }
 
-/* ENVELOPE */
+/* ENVELOPE (STABLE 3D) */
 .envelope{
     position:relative;
     width:420px;
     height:280px;
     transform-style:preserve-3d;
     cursor:pointer;
-    transition:0.8s;
+    transition:0.8s ease;
+    z-index:2;
 }
 
 .envelope.open{
-    transform:translateY(-20px) rotateX(8deg);
+    transform:rotateX(0deg) scale(1);
 }
 
 /* BASE */
@@ -99,7 +130,7 @@ body{
     clip-path:polygon(100% 0,50% 50%,100% 100%);
 }
 
-/* FLAP */
+/* FLAP (FIXED 3D ISSUE) */
 .flap{
     position:absolute;
     width:100%;
@@ -109,6 +140,8 @@ body{
     transform-origin:top;
     transition:1s ease-in-out;
     z-index:5;
+    backface-visibility:hidden;
+    transform:translateZ(0);
 }
 
 .envelope.open .flap{
@@ -149,13 +182,12 @@ body{
     border-radius:10px;
     padding:25px;
     box-shadow:0 15px 40px rgba(0,0,0,0.2);
-    transform:translateZ(-40px);
     transition:1.2s ease;
-    z-index:1;
+    z-index:3;
 }
 
 .envelope.open .letter{
-    transform:translateY(-160px) translateZ(60px);
+    transform:translateY(-130px);
     height:650px;
     overflow-y:auto;
 }
@@ -164,7 +196,7 @@ body{
 .content{
     opacity:0;
     transition:1s ease;
-    transition-delay:0.6s;
+    transition-delay:0.5s;
 }
 
 .envelope.open .content{
@@ -236,6 +268,13 @@ body{
 
 <body>
 
+<!-- INTRO -->
+<div class="intro" id="intro">
+    <h2>💌 A Special Surprise Awaits</h2>
+    <p>Tap anywhere to open ❤️</p>
+</div>
+
+<!-- TITLE -->
 <div class="top-title">Happy Mother's Day 💖</div>
 
 <!-- HEARTS -->
@@ -251,6 +290,7 @@ for(let i=0;i<30;i++){
 }
 </script>
 
+<!-- MAIN -->
 <div class="main">
 
 <div class="envelope" id="env">
@@ -271,30 +311,35 @@ for(let i=0;i<30;i++){
                 <img src="3.jpeg">
             </div>
 
-            <!-- 💖 HEART-MELTING PARAGRAPHS -->
+            <!-- 💖 FINAL HEART-TOUCHING MESSAGE -->
             <p>
-                Mom, if I ever become even half the person I am meant to be, it will be because of you.
-                You didn’t just raise me—you shaped my entire world with your love.
+                Mom, I may not always show it, but everything I am is because of you.
+                You built my life with love, patience, and silent sacrifices.
             </p>
 
             <p>
-                You stayed strong even when you were tired, smiled even when you were hurting,
-                and gave me comfort even when you had none left for yourself.
+                You gave up your comfort so I could have mine.
+                You carried my struggles even when I didn’t understand your pain.
             </p>
 
             <p>
-                I may not always say it, but I notice everything you do for me.
-                Every sacrifice, every silent prayer, every moment you chose me over yourself.
+                I still wonder how you stayed strong on days when life was hardest,
+                yet made sure I never felt even a moment of it.
             </p>
 
             <p>
-                No matter how far I go in life, no success, no place, no person will ever replace you.
-                Home will always mean you.
+                If I ever become someone good in life,
+                it will only be because I was raised by someone extraordinary — you.
             </p>
 
             <p>
-                Thank you for being my strength when I had none,
-                and my peace when the world felt too loud.
+                No matter where life takes me,
+                I will always find peace in you, because you are my home.
+            </p>
+
+            <p>
+                I hope one day I can give you even a fraction of the love you gave me every single day.
+                Until then, I will just keep loving you endlessly.
             </p>
 
             <div class="signature">Love You Forever ❤️</div>
@@ -307,12 +352,25 @@ for(let i=0;i<30;i++){
 
 </div>
 
+<!-- SCRIPT -->
 <script>
-document.getElementById("env").addEventListener("click",()=>{
-    document.getElementById("env").classList.toggle("open");
+
+const env=document.getElementById("env");
+const intro=document.getElementById("intro");
+
+let unlocked=false;
+
+intro.addEventListener("click",()=>{
+    intro.style.display="none";
+    unlocked=true;
 });
+
+env.addEventListener("click",()=>{
+    if(!unlocked) return;
+    env.classList.toggle("open");
+});
+
 </script>
 
 </body>
-
 </html>
